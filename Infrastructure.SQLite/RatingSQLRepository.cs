@@ -13,27 +13,48 @@ namespace Infrastructure.SQLite
 
         public double GetAverageRateFromReviewer(int reviewer)
         {
-            throw new NotImplementedException();
+            var res = ctx.Ratings
+                .Where(o => o.Reviewer == reviewer)
+                .Average(o => o.Grade);
+            return Math.Round(res, 2, MidpointRounding.AwayFromZero);
         }
 
         public double GetAverageRateOfMovie(int movie)
         {
-            throw new NotImplementedException();
+            var res = ctx.Ratings
+                .Where(o => o.Movie == movie)
+                .Average(o => o.Grade);
+            return Math.Round(res, 2, MidpointRounding.AwayFromZero);
         }
 
         public List<int> GetMostProductiveReviewers()
         {
-            throw new NotImplementedException();
+            var res = ctx.Ratings
+                .GroupBy(o => o.Reviewer)
+                .OrderByDescending(gp => gp.Count())
+                .Take(5)
+                .Select(g => g.Key).ToList();
+            return res;
         }
 
         public List<int> GetMoviesWithHighestNumberOfTopRates()
         {
-            throw new NotImplementedException();
+            var res = ctx.Ratings
+                .FromSqlRaw("SELECT Movie,COUNT(Movie) AS c, Grade FROM Ratings WHERE Grade = 5 GROUP BY Movie ORDER BY c DESC LIMIT 5")
+                .Select(o => o.Movie)
+                .ToList();
+            //SELECT Movie,COUNT(Movie) AS c, Grade FROM Ratings WHERE Grade = 5 GROUP BY Movie ORDER BY c DESC LIMIT 10
+            return res;
         }
 
         public int GetNumberOfRates(int movie, int rate)
         {
-            throw new NotImplementedException();
+            //SELECT COUNT(Grade) FROM Ratings WHERE Movie = 794999 AND Grade = 5
+            var res = ctx.Ratings
+                .Where(o => o.Movie == movie)
+                .Where(o => o.Grade == rate)
+                .Count();
+            return res;
         }
 
         public int GetNumberOfRatesByReviewer(int reviewer, int rate)

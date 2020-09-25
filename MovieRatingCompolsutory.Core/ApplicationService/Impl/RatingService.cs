@@ -14,27 +14,27 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
         }
         public double GetAverageRateFromReviewer(int reviewer)
         {
-            throw new NotImplementedException();
+            return repository.GetAverageRateFromReviewer(reviewer);
         }
 
         public double GetAverageRateOfMovie(int movie)
         {
-            throw new NotImplementedException();
+            return repository.GetAverageRateOfMovie(movie);
         }
 
         public List<int> GetMostProductiveReviewers()
         {
-            throw new NotImplementedException();
+            return repository.GetMostProductiveReviewers();
         }
 
         public List<int> GetMoviesWithHighestNumberOfTopRates()
         {
-            throw new NotImplementedException();
+            return repository.GetMoviesWithHighestNumberOfTopRates();
         }
 
         public int GetNumberOfRates(int movie, int rate)
         {
-            throw new NotImplementedException();
+            return repository.GetNumberOfRates(movie, rate);
         }
 
         public int GetNumberOfRatesByReviewer(int reviewer, int rate)
