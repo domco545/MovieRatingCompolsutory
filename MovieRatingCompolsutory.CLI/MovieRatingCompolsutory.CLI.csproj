@@ -5,4 +5,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure.SQLite\Infrastructure.SQLite.csproj" />
+    <ProjectReference Include="..\MovieRatingCompolsutory.Core.Entity\MovieRatingCompolsutory.Core.Entity.csproj" />
+    <ProjectReference Include="..\MovieRatingCompolsutory.Core\MovieRatingCompolsutory.Core.csproj" />
+  </ItemGroup>
+
 </Project>

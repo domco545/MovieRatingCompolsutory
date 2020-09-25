@@ -1,4 +1,10 @@
-﻿using System;
+﻿using Infrastructure.SQLite;
+using System;
+using MovieRatingCompolsutory.Core.Entity;
+using System.Linq;
+using System.Reflection;
+using System.Drawing;
+using Microsoft.EntityFrameworkCore;
 
 namespace MovieRatingCompolsutory.CLI
 {
@@ -6,7 +12,10 @@ namespace MovieRatingCompolsutory.CLI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var ctx = new RatingDBContext();
+
+            var found = ctx.Ratings.FirstOrDefault(o => o.Reviewer == 1);
+            Console.WriteLine(found);
         }
     }
 }

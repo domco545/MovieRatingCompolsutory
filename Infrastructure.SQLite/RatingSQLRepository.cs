@@ -1,17 +1,16 @@
-﻿using MovieRatingCompolsutory.Core.DomainService;
+﻿using Microsoft.EntityFrameworkCore;
+using MovieRatingCompolsutory.Core.DomainService;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
-namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
+namespace Infrastructure.SQLite
 {
-    public class RatingService : IRatingService
+    public class RatingSQLRepository : IRatingRepository
     {
-        IRatingRepository repository;
-        public RatingService(IRatingRepository r)
-        {
-            repository = r;
-        }
+        readonly RatingDBContext ctx = new RatingDBContext();
+
         public double GetAverageRateFromReviewer(int reviewer)
         {
             throw new NotImplementedException();
@@ -44,7 +43,7 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
 
         public int GetNumberOfReviews(int movie)
         {
-            return repository.GetNumberOfReviews(movie);
+            throw new NotImplementedException();
         }
 
         public int GetNumberOfReviewsFromReviewer(int reviewer)
