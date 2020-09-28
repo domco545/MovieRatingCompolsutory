@@ -9,9 +9,9 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
 {
     public class RatingServiceFile : IRatingService
     {
-        private readonly IRatingRepositoryFile _ratingRepoFile;
+        private readonly RatingRepositoryFile _ratingRepoFile;
         private List<Rating> ratings = new List<Rating>();
-        public RatingServiceFile(IRatingRepositoryFile ratingRepositoryFile)
+        public RatingServiceFile(RatingRepositoryFile ratingRepositoryFile)
         {
             _ratingRepoFile = ratingRepositoryFile;
             ratings = _ratingRepoFile.GetAll();
@@ -42,7 +42,8 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
 
         public double GetAverageRateOfMovie(int movie)
         {
-            throw new NotImplementedException();
+            var result = ratings.Where(x => x.Movie == movie).Average(x => x.Grade);
+            return result;
         }
 
         public int GetNumberOfRates(int movie, int rate)

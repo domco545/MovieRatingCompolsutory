@@ -5,7 +5,8 @@ using MovieRatingCompolsutory.Core.Entity;
 
 namespace MovieRatingCompolsutory.Core.DomainService
 {
-    public interface IRatingRepositoryFile
+    //Need rename RatingRepositoryFile to IRatingRepositoryFile
+    public interface RatingRepositoryFile
     {
         List<Rating> GetAll();
     }
