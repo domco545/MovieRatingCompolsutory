@@ -59,32 +59,57 @@ namespace Infrastructure.SQLite
 
         public int GetNumberOfRatesByReviewer(int reviewer, int rate)
         {
-            throw new NotImplementedException();
+            var res = ctx.Ratings
+                .Where(o => o.Reviewer == reviewer)
+                .Where(o => o.Grade == rate)
+                .Count();
+            return res;
         }
 
         public int GetNumberOfReviews(int movie)
         {
-            throw new NotImplementedException();
+            var res = ctx.Ratings
+                .Where(o => o.Movie == movie)
+                .Count();
+            return res;
         }
 
         public int GetNumberOfReviewsFromReviewer(int reviewer)
         {
-            throw new NotImplementedException();
+            var res = ctx.Ratings
+                .Where(o => o.Reviewer == reviewer)
+                .Count();
+            return res;
         }
 
         public List<int> GetReviewersByMovie(int movie)
         {
-            throw new NotImplementedException();
+            var res = ctx.Ratings
+                .Where(o => o.Movie == movie)
+                .Select(o => o.Reviewer)
+                .ToList();
+            return res;
         }
 
         public List<int> GetTopMoviesByReviewer(int reviewer)
         {
-            throw new NotImplementedException();
+            var res = ctx.Ratings
+                .Where(o => o.Reviewer == reviewer)
+                .OrderByDescending(o => o.Grade)
+                .Select(o => o.Movie)
+                .Take(5)
+                .ToList();
+            return res;
         }
 
         public List<int> GetTopRatedMovies(int amount)
         {
-            throw new NotImplementedException();
+            var res = ctx.Ratings
+                .OrderByDescending(o => o.Grade)
+                .Select(o => o.Movie)
+                .Take(amount)
+                .ToList();
+            return res;
         }
     }
 }

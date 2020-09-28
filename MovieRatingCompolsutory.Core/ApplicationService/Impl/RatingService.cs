@@ -39,7 +39,7 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
 
         public int GetNumberOfRatesByReviewer(int reviewer, int rate)
         {
-            throw new NotImplementedException();
+            return repository.GetNumberOfRatesByReviewer(reviewer, rate);
         }
 
         public int GetNumberOfReviews(int movie)
@@ -49,22 +49,22 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
 
         public int GetNumberOfReviewsFromReviewer(int reviewer)
         {
-            throw new NotImplementedException();
+            return repository.GetNumberOfReviewsFromReviewer(reviewer);
         }
 
         public List<int> GetReviewersByMovie(int movie)
         {
-            throw new NotImplementedException();
+            return repository.GetReviewersByMovie(movie);
         }
 
         public List<int> GetTopMoviesByReviewer(int reviewer)
         {
-            throw new NotImplementedException();
+            return repository.GetTopMoviesByReviewer(reviewer);
         }
 
         public List<int> GetTopRatedMovies(int amount)
         {
-            throw new NotImplementedException();
+            return repository.GetTopRatedMovies(amount);
         }
     }
 }
