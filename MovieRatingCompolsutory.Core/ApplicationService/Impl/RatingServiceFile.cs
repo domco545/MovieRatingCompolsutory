@@ -25,7 +25,7 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
         public double GetAverageRateFromReviewer(int reviewer)
         {
             var avgrade = ratings.Where(r => r.Reviewer == reviewer).Select(r => r.Grade).Average();
-            return avgrade;
+            return Math.Round(avgrade, 2, MidpointRounding.AwayFromZero);
         }
 
         public int GetNumberOfRatesByReviewer(int reviewer, int rate)
