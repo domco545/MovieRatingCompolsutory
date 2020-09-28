@@ -7,7 +7,7 @@ using MovieRatingCompolsutory.Core.Entity;
 
 namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
 {
-    class RatingServiceFile : IRatingService
+    public class RatingServiceFile : IRatingService
     {
         private readonly IRatingRepositoryFile _ratingRepoFile;
         private List<Rating> ratings = new List<Rating>();
