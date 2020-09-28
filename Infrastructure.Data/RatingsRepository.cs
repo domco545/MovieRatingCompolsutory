@@ -18,7 +18,7 @@ namespace Infrastructure.Data
         }
         public void ReadFile()
         {
-            using (StreamReader r = new StreamReader("C:\\3rdSemester\\SDMCompulsory\\Infrastructure.Data\\bin\\Debug\\ratings.json"))
+            using (StreamReader r = new StreamReader("C:\\3rdSemester\\MovieRatingCompolsutory\\Infrastructure.Data\\bin\\Debug\\ratings.json"))
             {
                 string json = r.ReadToEnd();
                 ratings = JsonConvert.DeserializeObject<List<Rating>>(json);
