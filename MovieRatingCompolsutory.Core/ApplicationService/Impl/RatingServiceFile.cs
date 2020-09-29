@@ -48,7 +48,8 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
 
         public int GetNumberOfRates(int movie, int rate)
         {
-            throw new NotImplementedException();
+            var result = ratings.Where(x => x.Movie == movie && x.Grade==rate).Count();
+            return result;
         }
 
         public List<int> GetMoviesWithHighestNumberOfTopRates()
