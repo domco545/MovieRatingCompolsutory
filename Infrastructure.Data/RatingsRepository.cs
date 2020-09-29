@@ -23,7 +23,9 @@ namespace Infrastructure.Data
         }
         public void ReadFile()
         {
-            using (StreamReader r = new StreamReader(@"C:\Users\saraf\Documents\GitHub\MovieRatingCompolsutory\Infrastructure.Data\Content\ratings.json"))
+            Console.WriteLine("Reading file");
+            var path = System.IO.Directory.GetParent(@"../../../../").FullName;
+            using (StreamReader r = new StreamReader(path+@"\ratings.json"))
             {
                 string json = r.ReadToEnd();
                 ratings = JsonConvert.DeserializeObject<List<Rating>>(json);
