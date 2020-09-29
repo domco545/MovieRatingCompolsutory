@@ -9,9 +9,9 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
 {
     public class RatingServiceFile : IRatingService
     {
-        private readonly RatingRepositoryFile _ratingRepoFile;
+        private readonly IRatingRepositoryFile _ratingRepoFile;
         private List<Rating> ratings = new List<Rating>();
-        public RatingServiceFile(RatingRepositoryFile ratingRepositoryFile)
+        public RatingServiceFile(IRatingRepositoryFile ratingRepositoryFile)
         {
             _ratingRepoFile = ratingRepositoryFile;
             ratings = _ratingRepoFile.GetAll();

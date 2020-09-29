@@ -14,7 +14,7 @@ namespace MovieRatingTest
     {
         private List<Rating> ratingList { get; set; }
         private readonly IRatingService ratingService;
-        private readonly RatingRepositoryFile ratingRepositoryFile;
+        private readonly IRatingRepositoryFile ratingRepositoryFile;
         public RatingTest()
         {
             ratingRepositoryFile = new RatingsRepository();

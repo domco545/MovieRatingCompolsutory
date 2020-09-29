@@ -21,12 +21,16 @@ namespace MovieRatingCompolsutory.CLI
             while (!exit)
             {
                 Console.WriteLine("Choose one option");
+                Console.WriteLine("0. Exit");
                 Console.WriteLine("1. Get Number Of Reviews From Reviewer");
 
                 var read = Console.ReadLine();
                 switch (read)
                 {
                     default: Console.WriteLine("Wrong input try again");
+                        break;
+                    case "0":
+                        exit = true;
                         break;
                     case "1": 
                         GetNumberOfReviewsFromReviewer();

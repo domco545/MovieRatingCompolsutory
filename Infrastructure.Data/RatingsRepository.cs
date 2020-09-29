@@ -9,8 +9,8 @@ using Newtonsoft.Json;
 namespace Infrastructure.Data
 {
     
-    //Need Rename RatingsRepository to RatingRepositoryFile
-    public class RatingsRepository : RatingRepositoryFile
+    //Need Rename RatingsRepository to IRatingRepositoryFile
+    public class RatingsRepository : IRatingRepositoryFile
     {
         private List<Rating> ratings = new List<Rating>();
         public RatingsRepository()
