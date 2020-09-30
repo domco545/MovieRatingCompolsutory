@@ -13,16 +13,95 @@ namespace MovieRatingTest
 {
     public class RatingTest
     {
-        private List<Rating> ratingList { get; set; }
-        private readonly IRatingService ratingService;
-        private readonly IRatingRepositoryFile ratingRepositoryFile;
-        public RatingTest()
+        [Fact]
+        public void GetNumberOfReviewsFromReviewerTest() 
         {
-            /*
-            ratingRepositoryFile = new RatingsRepository();
-            ratingService = new RatingServiceFile(ratingRepositoryFile);
-            ratingList = ratingRepositoryFile.GetAll();
-            */
+            Mock<IRatingRepositoryFile> repo = new Mock<IRatingRepositoryFile>();
+            List<Rating> ratings = new List<Rating>{
+                new Rating {Reviewer = 123, Movie = 321, Grade = 4, Date = DateTime.Now },
+                new Rating{Reviewer = 124, Movie = 321, Grade = 2, Date = DateTime.Now  },
+                new Rating{Reviewer = 123, Movie = 250, Grade = 2, Date = DateTime.Now}
+            };
+
+            repo.Setup(r => r.GetAll()).Returns(() => ratings);
+            IRatingService service = new RatingServiceFile(repo.Object);
+            repo.Verify(m => m.GetAll(), Times.Once);
+
+            var expected = 2;
+            var actual = service.GetNumberOfReviewsFromReviewer(123);
+
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void GetAverageRateFromReviewerTest()
+        {
+            Mock<IRatingRepositoryFile> repo = new Mock<IRatingRepositoryFile>();
+            List<Rating> ratings = new List<Rating>{
+                new Rating {Reviewer = 123, Movie = 321, Grade = 2, Date = DateTime.Now },
+                new Rating{Reviewer = 123, Movie = 456, Grade = 2, Date = DateTime.Now  }
+            };
+
+            repo.Setup(r => r.GetAll()).Returns(() => ratings);
+            IRatingService service = new RatingServiceFile(repo.Object);
+            repo.Verify(m => m.GetAll(), Times.Once);
+
+            var expected = 2;
+            var actual = service.GetAverageRateFromReviewer(123);
+
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void GetNumberOfRatesByReviewerTest() 
+        {
+            Mock<IRatingRepositoryFile> repo = new Mock<IRatingRepositoryFile>();
+            List<Rating> ratings = new List<Rating>{
+                new Rating {Reviewer = 123, Movie = 321, Grade = 4, Date = DateTime.Now },
+                new Rating{Reviewer = 123, Movie = 346, Grade = 2, Date = DateTime.Now  },
+                new Rating{Reviewer = 123, Movie = 765, Grade = 4, Date = DateTime.Now  },
+                new Rating{Reviewer = 124, Movie = 685, Grade = 5, Date = DateTime.Now  }
+            };
+
+            repo.Setup(r => r.GetAll()).Returns(() => ratings);
+            IRatingService service = new RatingServiceFile(repo.Object);
+            repo.Verify(m => m.GetAll(), Times.Once);
+
+            var expected = 2;
+            var actual = service.GetNumberOfRatesByReviewer(123,4);
+
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(321, 2)]
+        [InlineData(154, 4)]
+        public void GetNumberOfReviewsTest(int movie, int expected) 
+        {
+            Mock<IRatingRepositoryFile> repo = new Mock<IRatingRepositoryFile>();
+            List<Rating> ratings = new List<Rating>{
+                new Rating {Reviewer = 123, Movie = 321, Grade = 4, Date = DateTime.Now },
+                new Rating{Reviewer = 456, Movie = 321, Grade = 2, Date = DateTime.Now  },
+                new Rating{Reviewer = 865, Movie = 154, Grade = 4, Date = DateTime.Now  },
+                new Rating{Reviewer = 876, Movie = 154, Grade = 5, Date = DateTime.Now  },
+                new Rating{Reviewer = 244, Movie = 154, Grade = 5, Date = DateTime.Now  },
+                new Rating{Reviewer = 875, Movie = 154, Grade = 5, Date = DateTime.Now  },
+                new Rating{Reviewer = 957, Movie = 790, Grade = 5, Date = DateTime.Now  },
+                new Rating{Reviewer = 896, Movie = 790, Grade = 5, Date = DateTime.Now  },
+                new Rating{Reviewer = 967, Movie = 790, Grade = 5, Date = DateTime.Now  }
+            };
+
+            repo.Setup(r => r.GetAll()).Returns(() => ratings);
+            IRatingService service = new RatingServiceFile(repo.Object);
+            repo.Verify(m => m.GetAll(), Times.Once);
+
+            var actual = service.GetNumberOfReviews(movie);
+
+
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
@@ -38,18 +117,18 @@ namespace MovieRatingTest
             IRatingService service = new RatingServiceFile(repo.Object);
             repo.Verify(m => m.GetAll(), Times.Once);
 
-            var expepected = 3;
+            var expected = 3;
             var actual = service.GetAverageRateOfMovie(321);
 
 
-            Assert.Equal(expepected, actual);
+            Assert.Equal(expected, actual);
         }
+
         [Theory]
         [InlineData(321,1,4)]
         [InlineData(321,1,2)]
         [InlineData(321,0,3)]
         [InlineData(3,0,3)]
-
         public void GetNumberOfRatesTest(int movie,int expected,int rate)
         {
             Mock<IRatingRepositoryFile> repo = new Mock<IRatingRepositoryFile>();
@@ -67,26 +146,6 @@ namespace MovieRatingTest
 
 
             Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void GetAverageRateFromReviewerTest() 
-        {
-            Mock<IRatingRepositoryFile> repo = new Mock<IRatingRepositoryFile>();
-            List<Rating> ratings = new List<Rating>{ 
-                new Rating {Reviewer = 123, Movie = 321, Grade = 2, Date = DateTime.Now },
-                new Rating{Reviewer = 123, Movie = 456, Grade = 2, Date = DateTime.Now  } 
-            };
-
-            repo.Setup(r => r.GetAll()).Returns(() => ratings);
-            IRatingService service = new RatingServiceFile(repo.Object);
-            repo.Verify(m => m.GetAll(), Times.Once);
-
-            var expepected = 2;
-            var actual = service.GetAverageRateFromReviewer(123);
-
-
-            Assert.Equal(expepected, actual);
         }
     }
 }
