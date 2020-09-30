@@ -58,22 +58,30 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
 
         public List<int> GetMostProductiveReviewers()
         {
-            throw new NotImplementedException();
+            var result = ratings.GroupBy(r => r.Reviewer)
+                .OrderByDescending(r => r.Count()).Select(r => r.Key).Take(3).ToList();
+            return result;
         }
 
         public List<int> GetTopRatedMovies(int amount)
         {
-            throw new NotImplementedException();
+            // Something is maybe wrong, couldn't get grade.Average()
+            var results = ratings.OrderByDescending(r => r.Grade).Select(r => r.Movie).Take(amount).ToList();
+            return results;
         }
 
         public List<int> GetTopMoviesByReviewer(int reviewer)
         {
-            throw new NotImplementedException();
+            var results = ratings.Where(r => r.Reviewer == reviewer).OrderByDescending(r => r.Grade)
+                .OrderByDescending(r => r.Date).Select(r => r.Movie).ToList();
+            return results;
         }
 
         public List<int> GetReviewersByMovie(int movie)
         {
-            throw new NotImplementedException();
+            var results = ratings.Where(r => r.Movie == movie).OrderByDescending(r => r.Grade)
+                .OrderByDescending(r => r.Date).Select(r => r.Reviewer).ToList();
+            return results;
         }
     }
 }
