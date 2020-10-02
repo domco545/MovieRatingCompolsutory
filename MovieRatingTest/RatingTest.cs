@@ -88,5 +88,73 @@ namespace MovieRatingTest
 
             Assert.Equal(expepected, actual);
         }
+
+        [Fact]
+        public void GetNumberOfReviewsFromReviewerTest()
+        {
+            Mock<IRatingRepositoryFile> repo = new Mock<IRatingRepositoryFile>();
+            List<Rating> ratings = new List<Rating>{
+                new Rating {Reviewer = 123, Movie = 321, Grade = 2, Date = DateTime.Now },
+                new Rating{Reviewer = 123, Movie = 456, Grade = 2, Date = DateTime.Now  },
+                new Rating{Reviewer = 103, Movie = 456, Grade = 2, Date = DateTime.Now  }
+            };
+
+            repo.Setup(r => r.GetAll()).Returns(() => ratings);
+            IRatingService service = new RatingServiceFile(repo.Object);
+            repo.Verify(m => m.GetAll(), Times.Once);
+
+            var expepected = 2;
+            var actual = service.GetNumberOfReviewsFromReviewer(123);
+
+
+            Assert.Equal(expepected, actual);
+        }
+
+        [Theory]
+        [InlineData(123, 2, 2)]
+        [InlineData(103, 2, 1)]
+        public void GetNumberOfRatesByReviewerTest(int reviewer, int rate,int expected)
+        {
+            Mock<IRatingRepositoryFile> repo = new Mock<IRatingRepositoryFile>();
+            List<Rating> ratings = new List<Rating>{
+                new Rating {Reviewer = 123, Movie = 321, Grade = 2, Date = DateTime.Now },
+                new Rating{Reviewer = 123, Movie = 456, Grade = 2, Date = DateTime.Now  },
+                new Rating{Reviewer = 103, Movie = 456, Grade = 2, Date = DateTime.Now  }
+            };
+
+            repo.Setup(r => r.GetAll()).Returns(() => ratings);
+            IRatingService service = new RatingServiceFile(repo.Object);
+            repo.Verify(m => m.GetAll(), Times.Once);
+
+            
+            var actual = service.GetNumberOfRatesByReviewer(reviewer,rate);
+
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(456,3)]
+        [InlineData(321,1)]
+        public void GetNumberOfReviewsTest(int movie,int expected)
+        {
+            Mock<IRatingRepositoryFile> repo = new Mock<IRatingRepositoryFile>();
+            List<Rating> ratings = new List<Rating>{
+                new Rating {Reviewer = 123, Movie = 321, Grade = 2, Date = DateTime.Now },
+                new Rating{Reviewer = 123, Movie = 456, Grade = 2, Date = DateTime.Now  },
+                new Rating{Reviewer = 103, Movie = 456, Grade = 2, Date = DateTime.Now  },
+                new Rating{Reviewer = 113, Movie = 456, Grade = 2, Date = DateTime.Now  }
+            };
+
+            repo.Setup(r => r.GetAll()).Returns(() => ratings);
+            IRatingService service = new RatingServiceFile(repo.Object);
+            repo.Verify(m => m.GetAll(), Times.Once);
+
+
+            var actual = service.GetNumberOfReviews(movie);
+
+
+            Assert.Equal(expected, actual);
+        }
     }
 }
