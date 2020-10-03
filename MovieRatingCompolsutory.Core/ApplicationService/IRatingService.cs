@@ -12,7 +12,7 @@ namespace MovieRatingCompolsutory.Core.ApplicationService
         public int GetNumberOfReviews(int movie);
         public double GetAverageRateOfMovie(int movie);
         public int GetNumberOfRates(int movie, int rate);
-        public List<int> GetMoviesWithHighestNumberOfTopRates();
+        public List<int> GetMoviesWithHighestNumberOfTopRates(int movie);
         public List<int> GetMostProductiveReviewers();
         public List<int> GetTopRatedMovies(int amount);
         public List<int> GetTopMoviesByReviewer(int reviewer);

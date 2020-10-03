@@ -52,10 +52,6 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
             return result;
         }
 
-        public List<int> GetMoviesWithHighestNumberOfTopRates()
-        {
-            throw new NotImplementedException();
-        }
 
         public List<int> GetMostProductiveReviewers()
         {
@@ -83,6 +79,13 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
             var results = ratings.Where(r => r.Movie == movie).OrderByDescending(r => r.Grade)
                 .OrderByDescending(r => r.Date).Select(r => r.Reviewer).ToList();
             return results;
+        }
+
+        public List<int> GetMoviesWithHighestNumberOfTopRates(int movie)
+        {
+            var result = ratings.GroupBy(r => r.Movie)
+                .OrderByDescending(r => r.Count()).Select(r => r.Key).Take(1).ToList();
+            return result;
         }
     }
 }
