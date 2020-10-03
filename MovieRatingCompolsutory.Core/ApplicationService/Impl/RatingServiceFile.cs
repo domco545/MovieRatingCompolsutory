@@ -81,7 +81,7 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
             return results;
         }
 
-        public List<int> GetMoviesWithHighestNumberOfTopRates(int movie)
+        public List<int> GetMoviesWithHighestNumberOfTopRates()
         {
             var result = ratings.GroupBy(r => r.Movie)
                 .OrderByDescending(r => r.Count()).Select(r => r.Key).Take(1).ToList();

@@ -28,7 +28,7 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
         }
 
         
-        public List<int> GetMoviesWithHighestNumberOfTopRates(int movie)
+        public List<int> GetMoviesWithHighestNumberOfTopRates()
         {
             return repository.GetMoviesWithHighestNumberOfTopRates();
         }

@@ -153,14 +153,9 @@ namespace MovieRatingTest
         }
 
         
-        [Theory]
-        [InlineData(321)]
-        [InlineData(476)]
-        [InlineData(426)]
-        [InlineData(496)]
-        
+        [Fact]
 
-        public void GetMoviesWithHighestNumberOfTopRatesTest(int movie)
+        public void GetMoviesWithHighestNumberOfTopRatesTest()
         {
             Mock<IRatingRepositoryFile> repo = new Mock<IRatingRepositoryFile>();
             List<Rating> ratings = new List<Rating>{
@@ -172,10 +167,10 @@ namespace MovieRatingTest
             repo.Setup(r => r.GetAll()).Returns(() => ratings);
             IRatingService service = new RatingServiceFile(repo.Object);
             repo.Verify(m => m.GetAll(), Times.Once);
-            var actual = service.GetMoviesWithHighestNumberOfTopRates(movie);
+            List<int> actual = service.GetMoviesWithHighestNumberOfTopRates();
 
 
-            var expected = service.GetMoviesWithHighestNumberOfTopRates(movie);
+            List<int> expected = service.GetMoviesWithHighestNumberOfTopRates();
 
             Assert.Equal(expected,actual);
         }
