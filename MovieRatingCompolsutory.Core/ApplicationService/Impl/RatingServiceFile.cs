@@ -70,7 +70,7 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
         public List<int> GetTopMoviesByReviewer(int reviewer)
         {
             var results = ratings.Where(r => r.Reviewer == reviewer).OrderByDescending(r => r.Grade)
-                .OrderByDescending(r => r.Date).Select(r => r.Movie).ToList();
+                .OrderByDescending(r => r.Date).Select(r => r.Movie).Take(1).ToList();
             return results;
         }
 

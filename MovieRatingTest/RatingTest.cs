@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Xunit.Sdk;
 
 namespace MovieRatingTest
 {
@@ -174,7 +175,29 @@ namespace MovieRatingTest
 
             Assert.Equal(expected,actual);
         }
-        
 
+        [Theory]
+        [InlineData(123, 322)]
+        [InlineData(103,425)]
+        public void GetTopMoviesByReviewerTest(int reviewer,int expected)
+        {
+            Mock<IRatingRepositoryFile> repo = new Mock<IRatingRepositoryFile>();
+            List<Rating> ratings = new List<Rating>{
+                new Rating {Reviewer = 123, Movie = 321, Grade = 4, Date = DateTime.Now },
+                new Rating{Reviewer = 123, Movie = 476, Grade = 2, Date = DateTime.Now  },
+                new Rating {Reviewer = 123, Movie = 322, Grade = 5, Date = DateTime.Now },
+                new Rating{Reviewer = 103, Movie = 426, Grade = 1, Date = DateTime.Now  },
+                new Rating{Reviewer = 103, Movie = 425, Grade = 5, Date = DateTime.Now  },
+                new Rating{Reviewer = 103, Movie = 424, Grade = 4, Date = DateTime.Now  },
+                new Rating{Reviewer = 113, Movie = 496, Grade = 4, Date = DateTime.Now  }
+            };
+            repo.Setup(r => r.GetAll()).Returns(() => ratings);
+            IRatingService service = new RatingServiceFile(repo.Object);
+            repo.Verify(m => m.GetAll(), Times.Once);
+            List<int> actual = service.GetTopMoviesByReviewer(reviewer);
+            
+            
+            Assert.Equal(expected ,actual.First());
+        }
     }
 }
