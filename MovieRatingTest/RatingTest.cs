@@ -174,7 +174,26 @@ namespace MovieRatingTest
         [Fact]
         public void GetTopRatedMoviesTest()
         {
+            Mock<IRatingRepositoryFile> repo = new Mock<IRatingRepositoryFile>();
+            List<Rating> ratings = new List<Rating>{
+                new Rating {Reviewer = 123, Movie = 321, Grade = 4, Date = DateTime.Now },
+                new Rating{Reviewer = 123, Movie = 476, Grade = 5, Date = DateTime.Now  },
+                new Rating {Reviewer = 123, Movie = 487, Grade = 1, Date = DateTime.Now },
+                new Rating{Reviewer = 103, Movie = 321, Grade = 4, Date = DateTime.Now  },
+                new Rating{Reviewer = 103, Movie = 476, Grade = 5, Date = DateTime.Now  },
+                new Rating{Reviewer = 103, Movie = 424, Grade = 1, Date = DateTime.Now  },
+                new Rating{Reviewer = 113, Movie = 496, Grade = 1, Date = DateTime.Now  }
+            };
+            repo.Setup(r => r.GetAll()).Returns(() => ratings);
+            IRatingService service = new RatingServiceFile(repo.Object);
+            repo.Verify(m => m.GetAll(), Times.Once);
 
+            List<int> actual = service.GetTopRatedMovies(2);
+
+            List<int> expected = new List<int>() { 476, 321 };
+
+
+            Assert.Equal(expected, actual);
         }
 
         [Fact]

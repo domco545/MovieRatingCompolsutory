@@ -48,7 +48,7 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
 
         public int GetNumberOfRates(int movie, int rate)
         {
-            var result = ratings.Where(x => x.Movie == movie && x.Grade==rate).Count();
+            var result = ratings.Where(x => x.Movie == movie && x.Grade == rate).Count();
             return result;
         }
 
@@ -64,9 +64,10 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
         {
             // Something is maybe wrong, couldn't get grade.Average()
             var results = ratings
-                .OrderByDescending(r => r.Grade)
-                .Select(r => r.Movie)
+                .ToLookup(m => m.Movie, g => g.Grade)
+                .OrderByDescending(o => o.Average())
                 .Take(amount)
+                .Select(o => o.Key)
                 .ToList();
             return results;
         }

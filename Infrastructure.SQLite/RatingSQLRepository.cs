@@ -105,9 +105,12 @@ namespace Infrastructure.SQLite
         public List<int> GetTopRatedMovies(int amount)
         {
             var res = ctx.Ratings
-                .OrderByDescending(o => o.Grade)
-                .Select(o => o.Movie)
+                .GroupBy(g => g.Grade,
+                         m => m.Movie,
+                         (movie, grade) => new { movie, average = grade.Average() })
+                .OrderByDescending(a => a.average)
                 .Take(amount)
+                .Select(o => o.movie)
                 .ToList();
             return res;
         }
