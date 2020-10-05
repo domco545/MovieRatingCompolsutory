@@ -6,7 +6,9 @@ using MovieRatingCompolsutory.Core.DomainService;
 using MovieRatingCompolsutory.Core.Entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading;
 using Xunit;
 using Xunit.Sdk;
 
