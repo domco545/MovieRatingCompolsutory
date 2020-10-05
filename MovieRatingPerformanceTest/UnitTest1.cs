@@ -53,5 +53,61 @@ namespace MovieRatingPerformanceTest
         {
             service.GetNumberOfRatesByReviewer(25, 5);
         }
+
+        [TestMethod]
+        [Timeout(4000)]
+        public void GetNumberOfReviewsPerformance()
+        {
+            service.GetNumberOfReviews(30878);
+        }
+
+        [TestMethod]
+        [Timeout(4000)]
+        public void GetAverageRateOfMoviePerformance()
+        {
+            service.GetAverageRateOfMovie(2442);
+        }
+
+        [TestMethod]
+        [Timeout(4000)]
+        public void GetNumberOfRatesPerfomance()
+        {
+            service.GetNumberOfRates(1080361,3);
+        }
+
+        [TestMethod]
+        [Timeout(4000)]
+        public void GetMoviesWithHighestNumberOfTopRatesPerformance()
+        {
+            service.GetMoviesWithHighestNumberOfTopRates();
+        }
+
+        [TestMethod]
+        [Timeout(4000)]
+        public void GetMostProductiveReviewersPerformance()
+        {
+            service.GetMostProductiveReviewers();
+        }
+
+        [TestMethod]
+        [Timeout(4000)]
+        public void GetTopRatedMoviesPerformance()
+        {
+            service.GetTopRatedMovies(5);
+        }
+
+        [TestMethod]
+        [Timeout(4000)]
+        public void GetTopMoviesByReviewerPerformance()
+        {
+            service.GetTopMoviesByReviewer(666);
+        }
+
+        [TestMethod]
+        [Timeout(4000)]
+        public void GetReviewersByMoviePerformance()
+        {
+            service.GetReviewersByMovie(253436);
+        }
     }
 }
