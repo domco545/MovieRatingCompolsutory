@@ -63,14 +63,19 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
         public List<int> GetTopRatedMovies(int amount)
         {
             // Something is maybe wrong, couldn't get grade.Average()
-            var results = ratings.OrderByDescending(r => r.Grade).Select(r => r.Movie).Take(amount).ToList();
+            var results = ratings
+                .OrderByDescending(r => r.Grade)
+                .Select(r => r.Movie)
+                .Take(amount)
+                .ToList();
             return results;
         }
 
         public List<int> GetTopMoviesByReviewer(int reviewer)
         {
-            var results = ratings.Where(r => r.Reviewer == reviewer).OrderByDescending(r => r.Grade)
-                .OrderByDescending(r => r.Date).Select(r => r.Movie).Take(1).ToList();
+            var results = ratings.Where(r => r.Reviewer == reviewer)
+                .OrderByDescending(r => r.Grade)
+                .Select(r => r.Movie).Take(4).ToList();
             return results;
         }
 
@@ -84,7 +89,7 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
         public List<int> GetMoviesWithHighestNumberOfTopRates()
         {
             var result = ratings.GroupBy(r => r.Movie)
-                .OrderByDescending(r => r.Count()).Select(r => r.Key).Take(1).ToList();
+                .OrderByDescending(r => r.Count()).Select(r => r.Key).Take(4).ToList();
             return result;
         }
     }
