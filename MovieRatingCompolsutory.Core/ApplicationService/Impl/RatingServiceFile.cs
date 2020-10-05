@@ -81,8 +81,10 @@ namespace MovieRatingCompolsutory.Core.ApplicationService.Impl
 
         public List<int> GetReviewersByMovie(int movie)
         {
-            var results = ratings.Where(r => r.Movie == movie).OrderByDescending(r => r.Grade)
-                .OrderByDescending(r => r.Date).Select(r => r.Reviewer).ToList();
+            var results = ratings
+                .Where(r => r.Movie == movie)
+                .Select(r => r.Reviewer)
+                .ToList();
             return results;
         }
 

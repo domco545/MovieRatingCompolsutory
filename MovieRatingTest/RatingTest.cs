@@ -196,16 +196,35 @@ namespace MovieRatingTest
 
             List<int> actual = service.GetTopMoviesByReviewer(123);
 
-            List<int> expected = new List<int>() {322, 321, 476 };
-            
-            
+            List<int> expected = new List<int>() { 322, 321, 476 };
+
+
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void GetReviewersByMovieTest() 
+        public void GetReviewersByMovieTest()
         {
-        
+            Mock<IRatingRepositoryFile> repo = new Mock<IRatingRepositoryFile>();
+            List<Rating> ratings = new List<Rating>{
+                new Rating {Reviewer = 123, Movie = 321, Grade = 4, Date = DateTime.Now },
+                new Rating{Reviewer = 123, Movie = 476, Grade = 2, Date = DateTime.Now  },
+                new Rating {Reviewer = 123, Movie = 322, Grade = 5, Date = DateTime.Now },
+                new Rating{Reviewer = 103, Movie = 321, Grade = 1, Date = DateTime.Now  },
+                new Rating{Reviewer = 103, Movie = 425, Grade = 5, Date = DateTime.Now  },
+                new Rating{Reviewer = 103, Movie = 424, Grade = 4, Date = DateTime.Now  },
+                new Rating{Reviewer = 113, Movie = 321, Grade = 4, Date = DateTime.Now  }
+            };
+            repo.Setup(r => r.GetAll()).Returns(() => ratings);
+            IRatingService service = new RatingServiceFile(repo.Object);
+            repo.Verify(m => m.GetAll(), Times.Once);
+
+            List<int> actual = service.GetReviewersByMovie(321);
+
+            List<int> expected = new List<int>() { 123, 103, 113 };
+
+
+            Assert.Equal(expected, actual);
         }
     }
 }
